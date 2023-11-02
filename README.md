@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Proyecto LabSuelos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Documentación del Laboratorio de Analisis de Suelos [Documentación](https://estudianteccr-my.sharepoint.com/:w:/g/personal/olman02_estudiantec_cr/EVqjBv1s07BHjpXghgzMVUIBDWUYYcCckbRPia3tTCzOqA?e=2thosF).
 
 ## Available Scripts
 
