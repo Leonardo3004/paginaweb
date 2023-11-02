@@ -1,6 +1,6 @@
 # Proyecto LabSuelos
 
-Documentación del Laboratorio de Analisis de Suelos [Documentación](https://estudianteccr-my.sharepoint.com/:w:/g/personal/olman02_estudiantec_cr/EVqjBv1s07BHjpXghgzMVUIBDWUYYcCckbRPia3tTCzOqA?e=2thosF).
+Documentación del Laboratorio de Analisis de Suelos [Documento](https://estudianteccr-my.sharepoint.com/:w:/g/personal/olman02_estudiantec_cr/EVqjBv1s07BHjpXghgzMVUIBDWUYYcCckbRPia3tTCzOqA?e=2thosF).
 
 ## Available Scripts
 
