@@ -1,0 +1,17 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+# Environment variables
+.env
+
+# IDEs and editors
+/.vscode
+*.swp
+*.swo
+*.swn
+*.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
