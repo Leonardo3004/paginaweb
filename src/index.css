@@ -9,7 +9,19 @@
   font-size: 16px;
   border: 2px solid #434242;
 }
+.table-container {
+  
+  border-radius: 50px; /* Add rounded corners */
+  max-height: 500px; /* Establece la altura máxima deseada */
+  overflow: auto;    /* Agrega una barra de desplazamiento cuando el contenido excede la altura máxima */
+}
 
+table {
+  
+  border-radius: 30px; /* Add rounded corners */
+  width: 100%;       /* Asegura que la tabla ocupe el ancho completo del contenedor */
+  border-collapse: collapse; /* Mejora el aspecto de las celdas de la tabla */
+}
 .boton-venta{
   margin: 5px;
   padding-left: 20px;
