@@ -3,6 +3,10 @@ import ImageComponent from './Logo.png';
 import { Link } from 'react-router-dom';
 
 function Empleado() {
+    function redirigir(destino) {
+        // Cambia 'url_destino' por la URL a la que deseas redirigir
+        window.location.href = destino;
+    }
     return (
         <div>
             <header>
@@ -28,17 +32,14 @@ function Empleado() {
                         <div className='mb-2 rounded-corner bg-green'>
                             <h3 className='pb-3 pt-3 bold-text' >Empleado</h3>
                         </div >
-                        <form>
+                        
                             <div className='d-grid'>
-                                <button className='boton-panel' href ='/empleado'> Historial</button>
+                                <button className='boton-panel' onClick={() => redirigir('http://localhost:3001/Empleado')} href ='/empleado'> Historial</button>
                             </div>
                             <div className='d-grid'>
-                                <button className='boton-panel' href ='/empleado'> Registrar clientes</button>
+                                <button className='boton-panel' onClick={() => redirigir('http://localhost:3001/AgregarCliente')} href ='/empleado'> Registrar clientes</button>
                             </div>
-                            <div className='d-grid'>
-                                <button className='boton-panel' href ='/empleado'> Creditos</button>
-                            </div>
-                        </form>
+                        
                     </div>
                 
 

@@ -3,7 +3,11 @@ import ImageComponent from './Logo.png';
 import { Link } from 'react-router-dom';
 
 function Signup() {
-  return (
+    function redirigir(destino) {
+        // Cambia 'url_destino' por la URL a la que deseas redirigir
+        window.location.href = destino;
+    }
+    return (
     <div>
             <header>
                 <div class=' d-flex align-items-center'>
@@ -43,7 +47,7 @@ function Signup() {
                     <button className='boton-scan'> Seleccionar archivo</button>
                     </div>
                     <div className=' d-grid'>
-                        <button className='boton-log'> Aceptar</button>
+                        <button className='boton-log' onClick={() => redirigir('http://localhost:3001/Login')} > Aceptar</button>
                     </div>
                     
                     

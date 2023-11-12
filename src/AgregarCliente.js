@@ -43,8 +43,10 @@ function AgregarCliente() {
     };
 
     const handleEditLibro = (libro) => {
-        axios.put(`${API_URL}/${libro.id}`, libro);
+        setLibroActual(libro);
+        setIsEditing(true);
     };
+    
 
     const handleDeleteLibro = async (id) => {
         try {
@@ -56,9 +58,14 @@ function AgregarCliente() {
     };
 
     const handleCancelar = () => {
-        setLibroActual({ titulo: '', autor: '', descripcion: '', publicado: '' });
+        setLibroActual({ nombre: '', cedula: '', telefono: '', correo: '' });
         setIsEditing(false);
     };
+
+    function redirigir(destino) {
+        // Cambia 'url_destino' por la URL a la que deseas redirigir
+        window.location.href = destino;
+    }
 
 
     return (
@@ -87,18 +94,16 @@ function AgregarCliente() {
                         <div className='mb-2 rounded-corner bg-green'>
                             <h3 className='pb-3 pt-3 bold-text' >Empleado</h3>
                         </div >
-                        <form>
+                        
                             <div className='d-grid'>
-                                <button className='boton-panel' href ='/empleado'> Historial</button>
+                                <button className='boton-panel' onClick={() => redirigir('http://localhost:3001/Empleado')} href ='/empleado'> Historial</button>
                             </div>
                             <div className='d-grid'>
-                                <button className='boton-panel' href ='/empleado'> Registrar clientes</button>
+                                <button className='boton-panel' onClick={() => redirigir('http://localhost:3001/AgregarCliente')} href ='/empleado'> Registrar clientes</button>
                             </div>
-                            <div className='d-grid'>
-                                <button className='boton-panel' href ='/empleado'> Creditos</button>
-                            </div>
+                            
 
-                        </form>
+                        
                     </div>
                 
 
@@ -124,7 +129,7 @@ function AgregarCliente() {
                         
                         <div className='mt-4 panel-cliente rounded-corner bg-gray'>
                         
-                            <form>
+                            
 
 
                             <div className="table-container">
@@ -157,7 +162,7 @@ function AgregarCliente() {
                             </div>
                                 
                                 
-                            </form>
+                            
                         </div>
 
                     </div>
