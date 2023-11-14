@@ -20,10 +20,10 @@ const pool = new Pool({
 // Rutas CRUD aquí
 
 app.get('/', (req, res) => {
-    res.send('Bienvenido a la API de Manejo de Libros');
+    res.send('Bienvenido a la API de Manejo de LabSuelo');
   });
 
-// Obtener todos los libros
+// Obtener todos los clientes
 app.get('/api/clientes', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM Clientes');
@@ -34,7 +34,7 @@ app.get('/api/clientes', async (req, res) => {
   }
 });
 
-// Obtener un libro por ID
+// Obtener un cliente por ID
 app.get('/api/clientes/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -46,7 +46,7 @@ app.get('/api/clientes/:id', async (req, res) => {
   }
 });
 
-// Crear un nuevo libro
+// Crear un nuevo cliente
 app.post('/api/clientes', async (req, res) => {
   try {
     let { nombre, cedula, telefono, correo } = req.body;
@@ -64,7 +64,7 @@ app.post('/api/clientes', async (req, res) => {
   }
 });
 
-// Actualizar un libro
+// Actualizar un cliente
 app.put('/api/clientes/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -77,7 +77,7 @@ app.put('/api/clientes/:id', async (req, res) => {
   }
 });
 
-// Eliminar un libro
+// Eliminar un cliente
 app.delete('/api/clientes/:id', async (req, res) => {
 
   try {
@@ -96,3 +96,5 @@ app.delete('/api/clientes/:id', async (req, res) => {
 app.listen(3000, () => {
   console.log('Servidor corriendo en http://localhost:3000');
 });
+
+
