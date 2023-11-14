@@ -20,13 +20,14 @@ const pool = new Pool({
 // Rutas CRUD aquí
 
 app.get('/', (req, res) => {
-    res.send('Bienvenido a la API de Manejo de Libros');
-  });
+  res.send('Bienvenido a la API de manejo de base de datos');
+});
 
 // Obtener todos los libros
 app.get('/api/clientes', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM Clientes');
+
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -75,6 +76,7 @@ app.put('/api/clientes/:id', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+  
 });
 
 // Eliminar un libro
@@ -92,7 +94,51 @@ app.delete('/api/clientes/:id', async (req, res) => {
   }
 });
 
+app.get('/api/Usuarios', async (req, res) => {
+  try {
+    const result = await pool.query('Select * from usuarios');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/Usuarios/:email', async (req, res) => {
+  try {
+    console.log("holaqaaaaaaaaaaaaaaaa");
+    const { email } = req.params;
+    
+    const result = await pool.query('SELECT * FROM Usuarios WHERE email = $1',[email]);
+
+    console.log(result.rows[0].contraseña);
+    res.send(result.rows[0].contraseña);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/api/Usuarios', async (req, res) => {
+  try {
+    let { Email, Contrasena, Cedula } = req.body;
+    console.log({ Email, Contrasena, Cedula });
+    
+
+    await pool.query('INSERT INTO Usuarios (Email, Contraseña, Cedula) VALUES ($1, $2, $3) RETURNING *', [Email, Contrasena, Cedula]);
+    res.json({ message: 'Cliente agragado exitosamente' });
+
+    
+  } catch (error) {
+    console.error('Error inserting libro:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
 
 app.listen(3000, () => {
   console.log('Servidor corriendo en http://localhost:3000');
 });
+

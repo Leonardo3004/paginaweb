@@ -86,7 +86,7 @@ function Ingreso() {
 
                             <div className='align-items-center d-flex'>
                                 <h3 className='factura-text' >Fecha de entrega:</h3>
-                                <input type="texto" placeholder='' className='dato-factura'/>
+                                <input type="date" placeholder='' className='dato-factura'/>
                                 <h3 className='factura-text' >De factura a credito:</h3>
                                 <input type="texto" placeholder='' className='dato-factura'/>
                                 <button className='boton-aceptar' href ='/empleado'> Aceptar</button>
