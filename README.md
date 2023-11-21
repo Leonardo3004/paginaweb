@@ -1,6 +1,6 @@
 # Proyecto LabSuelos
 
-Documentación del Laboratorio de Analisis de Suelos [Documento](Documentacion).
+Documentación del Laboratorio de Analisis de Suelos [Documentos](Documentacion).
 
 ## Available Scripts
 
