@@ -106,7 +106,6 @@ app.get('/api/Usuarios', async (req, res) => {
 
 app.get('/api/Usuarios/:email', async (req, res) => {
   try {
-    console.log("holaqaaaaaaaaaaaaaaaa");
     const { email } = req.params;
     
     const result = await pool.query('SELECT * FROM Usuarios WHERE email = $1',[email]);
@@ -134,8 +133,143 @@ app.post('/api/Usuarios', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+////////////////ventas//////////////////
+app.get('/api/ultimafactura', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT MAX(CAST(id AS INTEGER))+1 AS UltimoNumeroFactura FROM FacturaVenta');
+
+    res.json(result.rows[0].ultimonumerofactura);
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/FacturaVenta', async (req, res) => {
+  try {
+    const result = await pool.query('Select * from FacturaVenta');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+app.post('/api/FacturaVenta', async (req, res) => {
+  try {
+    let { fecha, entregado, ClienteID, total } = req.body;
+    console.log({ fecha, entregado, ClienteID, total });
+    
+
+    await pool.query('INSERT INTO FacturaVenta (fecha, entregado, ClienteID, total, ventaoingreso) VALUES ($1, $2, $3, $4, $5) RETURNING *', [fecha, entregado, ClienteID, total, 'Venta']);
+    res.json({ message: 'Cliente agragado exitosamente' });
+
+    
+  } catch (error) {
+    console.error('Error inserting libro:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/Venta', async (req, res) => {
+  try {
+    const result = await pool.query('Select * from Ventas');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+app.post('/api/Venta', async (req, res) => {
+  try {
+    let { TipoDeMuestra, Cantidad, Detalle, Codigo, Costo } = req.body;
+    console.log({ TipoDeMuestra, Cantidad, Detalle, Codigo, Costo });
+    
+
+    await pool.query('INSERT INTO Ventas (TipoDeMuestra, Cantidad, Detalle, Codigo, Costo, factura) VALUES ($1, $2, $3,$4,$5, (SELECT MAX(CAST(id AS INTEGER)) AS UltimoNumeroFactura FROM FacturaVenta)) RETURNING *', [TipoDeMuestra, Cantidad, Detalle, Codigo, Costo]);
+    res.json({ message: 'Cliente agragado exitosamente' });
+
+    
+  } catch (error) {
+    console.error('Error inserting libro:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+///////////////////ingreso///////////////////////
 
 
+app.get('/api/Ingreso', async (req, res) => {
+  try {
+    const result = await pool.query('Select * from ingreso');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+app.post('/api/Ingreso', async (req, res) => {
+  try {
+    let {CodigoLaboratorio, IdentificacionDeCampo, AnalisisRequerido} = req.body;
+    console.log({ CodigoLaboratorio, IdentificacionDeCampo, AnalisisRequerido });
+    
+
+    await pool.query('INSERT INTO ingreso (CodigoLaboratorio, IdentificacionDeCampo, AnalisisRequerido, factura) VALUES ($1, $2, $3, (SELECT MAX(CAST(id AS INTEGER)) AS UltimoNumeroFactura FROM FacturaVenta)) RETURNING *', [CodigoLaboratorio, IdentificacionDeCampo, AnalisisRequerido]);
+    res.json({ message: 'Cliente agragado exitosamente' });
+
+    
+  } catch (error) {
+    console.error('Error inserting libro:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+app.post('/api/FacturaIngreso', async (req, res) => {
+  try {
+    let { fecha, entregado, ClienteID, total } = req.body;
+    console.log({ fecha, entregado, ClienteID, total });
+    
+
+    await pool.query('INSERT INTO FacturaVenta (fecha, entregado, ClienteID, total, ventaoingreso) VALUES ($1, $2, $3, $4, $5) RETURNING *', [fecha, entregado, ClienteID, total, 'Ingreso']);
+    res.json({ message: 'Cliente agragado exitosamente' });
+
+
+
+  } catch (error) {
+    console.error('Error inserting libro:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/FacturaIngreso', async (req, res) => {
+  try {
+    const result = await pool.query('select facturaventa.id, fecha, entregado, Clientes.nombre as cliente, total, ventaoingreso from public.facturaventa JOIN Clientes ON facturaventa.clienteid = Clientes.ID order by facturaventa.id DESC;;');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/TablaIngreso/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('select ingreso.*, ingreso.codigolaboratorio as codigo  from public.facturaventa join public.ingreso ON public.ingreso.factura = public.facturaventa.ID where facturaventa.id=$1', [id]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/TablaVenta/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('select ventas.codigo,ventas.tipodemuestra, ventas.detalle,  cantidad, costo  from public.facturaventa join public.ventas ON public.ventas.factura = public.facturaventa.ID where facturaventa.id=$1', [id]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 
 app.listen(3000, () => {
